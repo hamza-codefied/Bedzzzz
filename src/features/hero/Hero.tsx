@@ -1,9 +1,8 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import Button from '../../components/ui/Button';
-import { ChevronRight, Play } from 'lucide-react';
+import { ChevronRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
-
 const Hero: React.FC = () => {
   return (
     <section className="relative min-h-[90vh] flex items-center overflow-hidden pt-20 bg-gradient-to-br from-[#FFF5F7] via-white to-[#F5F7FF]">
