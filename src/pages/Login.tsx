@@ -126,25 +126,6 @@ const Login: React.FC = () => {
             </Button>
           </form>
 
-          <div className="relative my-10">
-            <div className="absolute inset-0 flex items-center">
-               <span className="w-full border-t border-zinc-100/50" />
-            </div>
-            <div className="relative flex justify-center text-[10px] uppercase font-black tracking-widest leading-none">
-               <span className="bg-white/0 px-4 text-zinc-300">Social Connect</span>
-            </div>
-          </div>
-
-          <div className="grid grid-cols-2 gap-5">
-             <Button variant="outline" className="h-14 border-zinc-100 bg-white/50 text-zinc-500 hover:text-primary rounded-2xl shadow-sm transition-all font-black uppercase tracking-widest text-[10px]">
-                <Globe className="w-4 h-4" />
-                Apple
-             </Button>
-             <Button variant="outline" className="h-14 border-zinc-100 bg-white/50 text-zinc-500 hover:text-primary rounded-2xl shadow-sm transition-all font-black uppercase tracking-widest text-[10px]">
-                <Mail className="w-4 h-4" />
-                Google
-             </Button>
-          </div>
         </motion.div>
 
         <p className="text-center mt-10 text-zinc-400 font-bold italic">
