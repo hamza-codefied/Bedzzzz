@@ -2,7 +2,7 @@ import axios from 'axios';
 
 const apiClient = axios.create({
   // baseURL: 'http://localhost:3000',
-  baseURL: 'https://bedzzz.onrender.com',
+  baseURL: 'https://bedzzz.onrender.com', 
   headers: {
     'Content-Type': 'application/json',
   },
