@@ -7,7 +7,7 @@ const AdminRoute: React.FC = () => {
   const location = useLocation();
 
   if (!isAuthenticated) {
-    return <Navigate to="/login" state={{ from: location }} replace />;
+    return <Navigate to="/admin/login" state={{ from: location }} replace />;
   }
 
   // If a regular user tries to access admin routes, redirect to home

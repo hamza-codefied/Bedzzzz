@@ -1,206 +1,400 @@
-import React from 'react';
-import { useQuery } from '@tanstack/react-query';
-import Layout from '../components/layout/Layout';
-import Hero from '../features/hero/Hero';
-import ProductCard from '../features/products/ProductCard';
-import { productService } from '../api/products';
-import { ArrowRight, Moon, Heart, Sparkles } from 'lucide-react';
-import Button from '../components/ui/Button';
-import { motion } from 'framer-motion';
+import React from "react";
+import { useQuery } from "@tanstack/react-query";
+import { productService } from "../api/products";
+import ProductCard from "../features/products/ProductCard";
+import Layout from "../components/layout/Layout";
+import Hero from "../features/hero/Hero";
+import {
+  ArrowRight,
+  Sparkles,
+  Shield,
+  Truck,
+  Moon,
+  Star,
+  Heart,
+  ArrowUpRight,
+} from "lucide-react";
+import Button from "../components/ui/Button";
+import { motion } from "framer-motion";
+import { Link } from "react-router-dom";
 
 const Home: React.FC = () => {
   const { data: products, isLoading } = useQuery({
-    queryKey: ['featured-products'],
+    queryKey: ["featured-products"],
     queryFn: productService.getProducts,
   });
 
   const categories = [
-    { title: 'Pure Bedding', img: 'https://images.unsplash.com/photo-1522771739844-6a9f6d5f14af?w=800&q=80', items: '120+ Items' },
-    { title: 'Cozy Kids', img: '/cat-kids.png', items: '80+ Items' },
-    { title: 'Artful Decor', img: '/cat-decor.png', items: '90+ Items' },
-    { title: 'Soft Blankets', img: 'https://images.unsplash.com/photo-1513201099705-a9746e1e201f?w=800&q=80', items: '40+ Items' },
+    {
+      title: "Best Bedding",
+      img: "https://images.unsplash.com/photo-1522771739844-6a9f6d5f14af?auto=format&fit=crop&q=80&w=800",
+      items: "12 Items",
+      size: "large",
+    },
+    {
+      title: "Home Decor",
+      img: "https://images.unsplash.com/photo-1616489953149-864c29997630?auto=format&fit=crop&q=80&w=800",
+      items: "8 Items",
+      size: "small",
+    },
+    {
+      title: "Soft Pillows",
+      img: "https://images.unsplash.com/photo-1584132967334-10e028bd69f7?auto=format&fit=crop&q=80&w=800",
+      items: "5 Items",
+      size: "small",
+    },
+    {
+      title: "Gift Ideas",
+      img: "https://images.unsplash.com/photo-1544441893-675973e31985?auto=format&fit=crop&q=80&w=800",
+      items: "15 Items",
+      size: "medium",
+    },
   ];
-
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.2
-      }
-    }
-  };
-
-  const itemVariants = {
-    hidden: { opacity: 0, y: 30 },
-    visible: { opacity: 1, y: 0, transition: { duration: 0.8 } }
-  };
 
   return (
     <Layout>
-      <Hero />
-      
-      {/* Features Section */}
-      <section className="py-32 bg-white overflow-hidden">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <motion.div 
-            variants={containerVariants}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, margin: "-100px" }}
-            className="grid grid-cols-1 md:grid-cols-3 gap-12"
-          >
-            <FeatureCard 
-              icon={<Moon className="w-12 h-12 text-primary" />}
-              title="Cloud-Like Comfort"
-              description="Sink into a world of pure relaxation with our premium fabrics designed for the ultimate sleep experience."
-            />
-            <FeatureCard 
-              icon={<Heart className="w-12 h-12 text-secondary" />}
-              title="Pure Organic Cotton"
-              description="Sustainably sourced, breathable materials that are gentle on your skin and the environment."
-            />
-            <FeatureCard 
-              icon={<Sparkles className="w-12 h-12 text-primary" />}
-              title="Modern Sanctuary"
-              description="Transform your bedroom into a breathtaking sanctuary with our curated, vibrant designs."
-            />
-          </motion.div>
-        </div>
-      </section>
+      <div className="premium-gradient-bg min-h-screen">
+        <Hero />
 
-      {/* Shop By Category */}
-      <section className="py-24 bg-[#FFF5F7]/30">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <motion.div 
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="text-center mb-16 space-y-4"
-          >
-            <h2 className="text-5xl font-black tracking-tighter uppercase italic">Shop By <span className="text-primary">Sanctuary</span></h2>
-            <p className="text-zinc-500 font-medium max-w-xl mx-auto leading-relaxed">Explore our curated collections designed to bring harmony and comfort to every corner of your home.</p>
-          </motion.div>
+        {/* Why Choose Us Section */}
+        <section className="py-24 relative overflow-hidden">
+          {/* Section Decoration */}
+          <div className="absolute top-1/2 left-0 w-80 h-80 bg-primary/10 rounded-full blur-[100px] -translate-x-1/2" />
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {categories.map((cat, idx) => (
+          <div className="max-w-[1200px] mx-auto px-6 lg:px-12 relative z-10">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
               <motion.div
-                key={cat.title}
-                initial={{ opacity: 0, scale: 0.9 }}
-                whileInView={{ opacity: 1, scale: 1 }}
+                initial={{ opacity: 0, x: -30 }}
+                whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true }}
-                transition={{ delay: idx * 0.1, duration: 0.6 }}
-                className="group cursor-pointer"
+                className="space-y-8"
               >
-                <div className="relative aspect-[4/5] rounded-[2.5rem] overflow-hidden shadow-xl shadow-primary/5 mb-6">
-                  <img src={cat.img} alt={cat.title} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-60 group-hover:opacity-80 transition-opacity" />
-                  <div className="absolute bottom-8 left-8">
-                    <p className="text-[10px] font-black text-white/80 uppercase tracking-widest mb-1">{cat.items}</p>
-                    <h4 className="text-2xl font-black text-white tracking-widest uppercase">{cat.title}</h4>
-                  </div>
+                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 text-primary text-[10px] font-bold uppercase tracking-widest border border-primary/20">
+                  <Sparkles className="w-3 h-3" />
+                  <span>Why Choose Us</span>
+                </div>
+                <h2 className="text-[28px] font-bold text-zinc-900 leading-tight uppercase tracking-tight max-w-md">
+                  We make the softest bedding for a great sleep.
+                </h2>
+                <p className="text-zinc-500 text-lg leading-relaxed font-medium">
+                  We focus on quality and comfort. Every item we sell is made to
+                  be soft, strong, and good for the planet.
+                </p>
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 pt-4">
+                  <MiniFeature
+                    icon={<Shield />}
+                    title="Good Quality"
+                    text="Made with safe and strong materials."
+                  />
+                  <MiniFeature
+                    icon={<Truck />}
+                    title="Fast Shipping"
+                    text="We ship your orders very quickly."
+                  />
+                  <MiniFeature
+                    icon={<Star />}
+                    title="Very Soft"
+                    text="Designed to feel great on your skin."
+                  />
+                  <MiniFeature
+                    icon={<Heart />}
+                    title="Easy Returns"
+                    text="Return it if you don't love it."
+                  />
                 </div>
               </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
 
-      {/* Featured Products */}
-      <section className="py-32">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <motion.div 
-            initial={{ opacity: 0, y: 40 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6"
-          >
-            <div className="space-y-3">
-              <h2 className="text-5xl font-black tracking-tighter uppercase italic">New <span className="text-primary">Arrivals</span></h2>
-              <p className="text-zinc-500 font-medium text-lg">The most sought-after pieces for your sanctuary.</p>
-            </div>
-            <Button variant="ghost" className="w-fit flex items-center gap-3 group font-black uppercase tracking-widest border-b-2 border-primary/20 hover:border-primary transition-all pb-2">
-              Explore All Essentials
-              <ArrowRight className="w-5 h-5 group-hover:translate-x-2 transition-transform" />
-            </Button>
-          </motion.div>
-
-          {isLoading ? (
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10">
-              {[1, 2, 3, 4].map((i) => (
-                <div key={i} className="h-[500px] bg-zinc-50 rounded-[3rem] animate-pulse" />
-              ))}
-            </div>
-          ) : (
-            <motion.div 
-              variants={containerVariants}
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true }}
-              className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10"
-            >
-              {products?.slice(0, 4).map((product) => (
-                <motion.div key={product.id} variants={itemVariants}>
-                  <ProductCard product={product} />
+              <motion.div
+                initial={{ opacity: 0, scale: 0.95 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                viewport={{ once: true }}
+                className="relative"
+              >
+                <div className="aspect-square rounded-[3rem] overflow-hidden shadow-2xl relative z-10">
+                  <img
+                    src="https://images.unsplash.com/photo-1505691723518-36a5ac3be353?auto=format&fit=crop&q=80&w=1000"
+                    alt="Comfortable Bed"
+                    className="w-full h-full object-cover"
+                  />
+                </div>
+                <motion.div
+                  animate={{ y: [0, -20, 0] }}
+                  transition={{
+                    duration: 4,
+                    repeat: Infinity,
+                    ease: "easeInOut",
+                  }}
+                  className="absolute -bottom-10 -left-10 bg-white/80 backdrop-blur-xl p-6 rounded-3xl shadow-xl z-20 border border-white/50 max-w-[200px]"
+                >
+                  <div className="flex items-center gap-3 mb-2">
+                    <div className="w-8 h-8 rounded-lg bg-zinc-900 flex items-center justify-center text-white">
+                      <Moon className="w-4 h-4" />
+                    </div>
+                    <span className="text-[10px] font-bold uppercase tracking-widest text-zinc-900">
+                      Good Rest
+                    </span>
+                  </div>
+                  <p className="text-[11px] text-zinc-500 font-medium">
+                    Perfect for a deep and peaceful sleep all night.
+                  </p>
                 </motion.div>
-              ))}
-            </motion.div>
-          )}
-        </div>
-      </section>
-
-      {/* CTA Section */}
-      <section className="py-32 relative overflow-hidden">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <motion.div 
-            initial={{ opacity: 0, scale: 0.95 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            viewport={{ once: true }}
-            className="bg-gradient-to-br from-primary via-[#FF2E6A] to-secondary rounded-[4rem] p-16 md:p-28 relative overflow-hidden text-center shadow-[0_40px_100px_-20px_rgba(255,94,142,0.4)]"
-          >
-            <div className="relative z-10 space-y-10 max-w-3xl mx-auto">
-              <h2 className="text-5xl md:text-7xl font-black text-white uppercase tracking-tighter leading-[0.85] italic">
-                SAVOR EVERY <br /> MOMENT OF SLEEP
-              </h2>
-              <p className="text-white/90 text-xl font-medium max-w-xl mx-auto leading-relaxed">
-                Join the Bedzzz family and get exclusive access to seasonal drops, sleep care tips, and member-only rewards.
-              </p>
-              <div className="pt-6">
-                <Button size="lg" variant="outline" className="bg-white text-primary border-white hover:shadow-2xl hover:scale-105 transition-all px-16 py-8 rounded-[2rem] font-black text-xl uppercase tracking-[0.2em]">
-                  Join The Club
-                </Button>
-              </div>
+              </motion.div>
             </div>
-            {/* Background decoration */}
-            <motion.div 
-              animate={{ rotate: 360 }}
-              transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
-              className="absolute top-0 right-0 w-[500px] h-[500px] bg-white/10 rounded-full blur-[120px] -mr-64 -mt-64" 
-            />
-            <motion.div 
-              animate={{ rotate: -360 }}
-              transition={{ duration: 25, repeat: Infinity, ease: "linear" }}
-              className="absolute bottom-0 left-0 w-[600px] h-[600px] bg-black/5 rounded-full blur-[150px] -ml-80 -mb-80" 
-            />
-          </motion.div>
-        </div>
-      </section>
+          </div>
+        </section>
+
+        {/* Shop By Category */}
+        <section className="py-24 relative overflow-hidden bg-primary/5">
+          {/* Background Elements */}
+          <div className="absolute top-0 right-0 w-[40rem] h-[40rem] bg-blue-500/10 rounded-full blur-[150px] translate-x-1/2 -translate-y-1/2" />
+          <div className="absolute bottom-0 left-0 w-[30rem] h-[30rem] bg-primary/10 rounded-full blur-[120px] -translate-x-1/2 translate-y-1/2" />
+
+          <div className="max-w-[1200px] mx-auto px-6 lg:px-12 relative z-10">
+            <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
+              <div className="space-y-4">
+                <div className="flex items-center gap-3">
+                  <div className="w-1.5 h-1.5 rounded-full bg-primary" />
+                  <span className="text-zinc-500 text-[10px] font-bold uppercase tracking-[0.3em]">
+                    New Collection
+                  </span>
+                </div>
+                <h2 className="text-[28px] font-bold text-zinc-900 uppercase tracking-tight">
+                  Shop By Category
+                </h2>
+              </div>
+              <Link
+                to="/products"
+                className="group flex items-center gap-2 text-[11px] font-bold uppercase tracking-widest text-primary hover:text-zinc-900 transition-colors"
+              >
+                See All Items
+                <ArrowUpRight className="w-4 h-4 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
+              </Link>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-4 grid-rows-2 gap-6 h-[1000px] md:h-[650px]">
+              <CategoryCard
+                data={categories[0]}
+                className="md:col-span-2 md:row-span-2"
+              />
+              <CategoryCard
+                data={categories[1]}
+                className="md:col-span-1 md:row-span-1"
+              />
+              <CategoryCard
+                data={categories[2]}
+                className="md:col-span-1 md:row-span-1"
+              />
+              <CategoryCard
+                data={categories[3]}
+                className="md:col-span-2 md:row-span-1"
+              />
+            </div>
+          </div>
+        </section>
+
+        {/* Top Products */}
+        <section className="py-24 relative overflow-hidden">
+          <div className="absolute top-1/2 left-0 w-96 h-96 bg-primary/10 rounded-full blur-[120px] -translate-x-1/2 -translate-y-1/2" />
+          <div className="absolute top-0 right-0 w-80 h-80 bg-blue-500/5 rounded-full blur-[100px] translate-x-1/2" />
+
+          <div className="max-w-[1200px] mx-auto px-6 lg:px-12 relative z-10">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              className="flex flex-col items-center text-center mb-20 space-y-4"
+            >
+              <div className="w-12 h-12 rounded-2xl bg-white flex items-center justify-center text-primary mb-2 shadow-md">
+                <Star className="w-6 h-6 fill-current" />
+              </div>
+              <h2 className="text-[28px] font-bold text-zinc-900 uppercase tracking-tight">
+                Our Best Products
+              </h2>
+              <p className="text-zinc-500 max-w-xl mx-auto text-base font-medium">
+                These are our most popular items that customers love the most.
+              </p>
+            </motion.div>
+
+            {isLoading ? (
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10">
+                {[1, 2, 3, 4].map((i) => (
+                  <div
+                    key={i}
+                    className="aspect-[4/5] bg-white/50 rounded-3xl animate-pulse"
+                  />
+                ))}
+              </div>
+            ) : (
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10">
+                {products?.slice(0, 4).map((product, idx) => (
+                  <motion.div
+                    key={product.id}
+                    initial={{ opacity: 0, scale: 0.98 }}
+                    whileInView={{ opacity: 1, scale: 1 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: idx * 0.1, duration: 0.8 }}
+                  >
+                    <ProductCard product={product} />
+                  </motion.div>
+                ))}
+              </div>
+            )}
+
+            <div className="mt-20 text-center">
+              <Link to="/products" className="inline-block">
+                <Button
+                  variant="outline"
+                  className="px-12 h-14 rounded-2xl text-[10px] font-bold uppercase tracking-[0.2em] border-zinc-200 hover:border-zinc-900 transition-all duration-300 group shadow-lg bg-white/50 backdrop-blur-sm"
+                >
+                  See All Products
+                  <ArrowRight className="ml-3 w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                </Button>
+              </Link>
+            </div>
+          </div>
+        </section>
+
+        {/* Email List CTA */}
+        {/* High-Impact Newsletter Section */}
+        <section className="py-24 pb-32">
+          <div className="max-w-[1200px] mx-auto px-6 lg:px-12">
+            <motion.div
+              initial={{ opacity: 0, y: 50 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              className="relative rounded-[3.5rem] overflow-hidden shadow-[0_40px_100px_-20px_rgba(0,0,0,0.3)] min-h-[550px] flex items-center p-8 md:p-20"
+            >
+              {/* Fixed Local Background Image */}
+              <div className="absolute inset-0">
+                <img
+                  src="/hero-bedroom.png"
+                  alt="Quality Bedroom"
+                  className="w-full h-full object-cover scale-105"
+                />
+                {/* Heavy Dual Overlay for Text Pop */}
+                <div className="absolute inset-0 bg-zinc-900/40" />
+                <div className="absolute inset-0 bg-gradient-to-r from-zinc-900 via-zinc-900/80 to-transparent" />
+              </div>
+
+              {/* Content - Aligned Left for Better Visual Hierarchy */}
+              <div className="relative z-10 max-w-xl space-y-8">
+                <motion.div
+                  initial={{ opacity: 0, x: -20 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  transition={{ delay: 0.2 }}
+                  className="inline-flex items-center gap-3 px-4 py-2 rounded-2xl bg-primary/20 backdrop-blur-xl text-primary-light text-[10px] font-bold uppercase tracking-[0.2em] border border-primary/20"
+                >
+                  <Sparkles className="w-4 h-4" />
+                  <span>Join our community</span>
+                </motion.div>
+
+                <h2 className="text-[32px] md:text-5xl font-bold text-white uppercase tracking-tighter leading-[0.9] drop-shadow-2xl">
+                  Get updates on <br /> our best bedding.
+                </h2>
+
+                <p className="text-zinc-300 text-lg font-medium max-w-sm leading-relaxed">
+                  Be the first to hear about new items and special sales. We
+                  never send spam.
+                </p>
+
+                <div className="w-full">
+                  <div className="flex flex-col sm:flex-row p-2 bg-white/10 backdrop-blur-3xl rounded-[1.5rem] border border-white/20 shadow-2xl group focus-within:ring-2 focus-within:ring-primary/50 transition-all">
+                    <input
+                      type="email"
+                      placeholder="Your email address"
+                      className="bg-transparent border-none focus:ring-0 text-white placeholder:text-zinc-400 text-base flex-1 px-6 py-4"
+                    />
+                    <Button className="rounded-2xl px-12 h-14 text-[10px] font-black uppercase tracking-[0.2em] shadow-xl bg-primary text-white hover:bg-white hover:text-zinc-900 transition-all duration-500">
+                      Sign Up
+                    </Button>
+                  </div>
+                  <p className="text-[10px] text-zinc-500 mt-4 uppercase tracking-[0.2em] font-bold ml-4">
+                    Trusted by 50,000+ local families
+                  </p>
+                </div>
+              </div>
+
+              {/* Decorative Badge */}
+              <motion.div
+                animate={{ rotate: 360 }}
+                transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+                className="absolute -top-12 -right-12 w-48 h-48 bg-primary/10 backdrop-blur-3xl rounded-full border border-white/5 flex items-center justify-center opacity-20"
+              />
+              <div className="absolute top-12 right-12 hidden lg:block">
+                <div className="w-24 h-24 rounded-3xl bg-white/10 backdrop-blur-xl border border-white/20 flex flex-col items-center justify-center text-white shadow-2xl">
+                  <Heart className="w-8 h-8 fill-primary text-primary mb-1" />
+                  <span className="text-[9px] font-black uppercase tracking-widest text-primary">
+                    Softness
+                  </span>
+                </div>
+              </div>
+            </motion.div>
+          </div>
+        </section>
+      </div>
     </Layout>
   );
 };
 
-const FeatureCard = ({ icon, title, description }: { icon: React.ReactNode, title: string, description: string }) => (
-  <motion.div 
-    variants={{
-      hidden: { opacity: 0, y: 30 },
-      visible: { opacity: 1, y: 0 }
-    }}
-    className="p-12 bg-white border border-zinc-50 rounded-[3.5rem] space-y-8 hover:shadow-[0_40px_80px_-20px_rgba(0,0,0,0.08)] transition-all duration-700 group text-center flex flex-col items-center border-none"
+const MiniFeature = ({
+  icon,
+  title,
+  text,
+}: {
+  icon: React.ReactNode;
+  title: string;
+  text: string;
+}) => (
+  <div className="flex items-start gap-4 group">
+    <div className="w-10 h-10 rounded-xl bg-white/50 border border-zinc-200 flex items-center justify-center text-primary shadow-sm shrink-0">
+      {React.isValidElement(icon)
+        ? React.cloneElement(icon as React.ReactElement<any>, {
+            className: "w-4 h-4",
+          })
+        : icon}
+    </div>
+    <div className="space-y-1">
+      <h4 className="text-sm font-bold text-zinc-900 uppercase tracking-tight">
+        {title}
+      </h4>
+      <p className="text-xs text-zinc-500 font-medium leading-relaxed">
+        {text}
+      </p>
+    </div>
+  </div>
+);
+
+const CategoryCard = ({
+  data,
+  className,
+}: {
+  data: any;
+  className?: string;
+}) => (
+  <motion.div
+    whileHover={{ y: -5 }}
+    className={`relative group rounded-3xl overflow-hidden shadow-lg border border-white/50 cursor-pointer ${className}`}
   >
-    <div className="mb-4 group-hover:scale-110 group-hover:rotate-6 transition-transform duration-500 bg-zinc-50 p-6 rounded-[2rem] shadow-sm">{icon}</div>
-    <div className="space-y-4">
-      <h3 className="text-2xl font-black tracking-tighter uppercase text-zinc-900 italic">{title}</h3>
-      <p className="text-zinc-500 font-medium leading-relaxed italic text-sm">{description}</p>
+    <img
+      src={data.img}
+      alt={data.title}
+      className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105"
+    />
+    <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/10 to-transparent opacity-60 group-hover:opacity-80 transition-opacity" />
+    <div className="absolute inset-0 p-8 flex flex-col justify-end">
+      <span className="text-[9px] font-bold text-white/60 uppercase tracking-widest mb-1">
+        {data.items}
+      </span>
+      <h4 className="text-xl font-bold text-white tracking-tight uppercase leading-none">
+        {data.title}
+      </h4>
+      <div className="mt-4 flex items-center gap-2 opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-500">
+        <span className="text-[9px] font-bold text-primary uppercase tracking-widest">
+          Shop Now
+        </span>
+        <ArrowRight className="w-3 h-3 text-primary" />
+      </div>
     </div>
   </motion.div>
 );

@@ -2,12 +2,12 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import Home from './pages/Home';
 import Login from './pages/Login';
-import Signup from './pages/Signup';
 import ProductDetails from './pages/ProductDetails';
 import Products from './pages/Products';
-import ProtectedRoute from './components/layout/ProtectedRoute';
 import AdminRoute from './components/layout/AdminRoute';
 import { AuthProvider } from './context/AuthContext';
+import { CartProvider } from './context/CartContext';
+import Cart from './pages/Cart';
 
 // Admin Pages
 import AdminLayout from './admin/components/AdminLayout';
@@ -33,20 +33,17 @@ function App() {
   return (
     <QueryClientProvider client={queryClient}>
       <AuthProvider>
-        <Router>
+        <CartProvider>
+          <Router>
           <Routes>
-            {/* Public routes */}
-            <Route path="/login" element={<Login />} />
-            <Route path="/signup" element={<Signup />} />
+            {/* Public customer routes — no login required */}
+            <Route path="/" element={<Home />} />
+            <Route path="/products" element={<Products />} />
+            <Route path="/product/:id" element={<ProductDetails />} />
+            <Route path="/cart" element={<Cart />} />
 
-            {/* Protected user routes — regular users only */}
-            <Route element={<ProtectedRoute />}>
-              <Route path="/" element={<Home />} />
-              <Route path="/products" element={<Products />} />
-              <Route path="/product/:id" element={<ProductDetails />} />
-              {/* Add more user routes here */}
-              <Route path="*" element={<Home />} />
-            </Route>
+            {/* Admin login route */}
+            <Route path="/admin/login" element={<Login />} />
 
             {/* Admin routes — admin role only */}
             <Route element={<AdminRoute />}>
@@ -60,8 +57,12 @@ function App() {
                 <Route path="/admin/settings" element={<AdminSettings />} />
               </Route>
             </Route>
+
+            {/* Catch-all for unknown routes */}
+            <Route path="*" element={<Home />} />
           </Routes>
         </Router>
+        </CartProvider>
       </AuthProvider>
     </QueryClientProvider>
   );

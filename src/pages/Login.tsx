@@ -34,12 +34,12 @@ const Login: React.FC = () => {
   const mutation = useMutation({
     mutationFn: authService.login,
     onSuccess: (data) => {
-      login(data.data, data.token);
-      if (data.data.role === "admin") {
-        navigate("/admin");
-      } else {
-        navigate("/");
+      if (data.data.role !== "admin") {
+        setError("Access denied. This login is for administrators only.");
+        return;
       }
+      login(data.data, data.token);
+      navigate("/admin");
     },
     onError: (err: any) => {
       setError(
@@ -55,87 +55,78 @@ const Login: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-[#FFF5F7]/30 flex items-center justify-center p-6 relative overflow-hidden">
-      {/* Background decoration */}
+    <div className="min-h-screen premium-gradient-bg flex items-center justify-center p-6 relative overflow-hidden">
+      {/* Background Blurs */}
+      <div className="absolute top-0 right-0 w-96 h-96 bg-primary/5 blur-[120px] rounded-full -mr-48 -mt-48" />
+      <div className="absolute bottom-0 left-0 w-80 h-80 bg-blue-500/5 blur-[100px] rounded-full -ml-40 -mb-40" />
+      
       <motion.div
-        animate={{ scale: [1, 1.2, 1], x: [0, 50, 0] }}
-        transition={{ duration: 20, repeat: Infinity }}
-        className="absolute top-0 right-0 w-[800px] h-[800px] bg-primary/5 rounded-full blur-[150px] -mr-96 -mt-96"
-      />
-      <motion.div
-        animate={{ scale: [1, 1.3, 1], x: [0, -50, 0] }}
-        transition={{ duration: 25, repeat: Infinity, delay: 2 }}
-        className="absolute bottom-0 left-0 w-[600px] h-[600px] bg-secondary/5 rounded-full blur-[120px] -ml-64 -mb-64"
-      />
-
-      <motion.div
-        initial={{ opacity: 0, scale: 0.95 }}
+        initial={{ opacity: 0, scale: 0.98 }}
         animate={{ opacity: 1, scale: 1 }}
-        transition={{ duration: 0.8 }}
         className="w-full max-w-md relative z-10"
       >
         <div className="text-center mb-10">
           <Link
             to="/"
-            className="inline-flex flex-col items-center gap-3 mb-8 group"
+            className="inline-flex flex-col items-center gap-3 mb-6 group"
           >
-            <div className="w-24 h-24 bg-white rounded-3xl shadow-2xl flex items-center justify-center border border-zinc-50 group-hover:rotate-12 transition-all duration-500">
+            <div className="w-16 h-16 bg-white rounded-2xl shadow-sm flex items-center justify-center border border-zinc-100">
               <img
                 src="/bedzzz-logo.png"
                 alt="Bedzzz Logo"
-                className="w-16 h-16 object-contain"
+                className="w-10 h-10 object-contain"
               />
             </div>
-            <span className="text-zinc-900 font-black text-5xl tracking-tighter uppercase italic">
-              Bed<span className="text-primary italic-none">zzz</span>
+            <span className="text-zinc-900 font-bold text-2xl tracking-tight">
+              Bedzzz
             </span>
           </Link>
-          <h1 className="text-4xl font-black text-zinc-900 uppercase tracking-tighter italic">
-            Welcome Home
+          <h1 className="text-[28px] font-bold text-zinc-900 uppercase tracking-tight">
+            Admin Portal
           </h1>
-          <p className="text-zinc-500 mt-3 font-medium italic">
-            Return to your personal sanctuary of comfort.
+          <p className="text-zinc-500 mt-2 font-medium">
+            Sign in to manage your sanctuary.
           </p>
         </div>
 
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
+          initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.2 }}
-          className="bg-white/70 backdrop-blur-3xl border border-white p-10 rounded-[3.5rem] shadow-[0_40px_100px_-20px_rgba(255,140,167,0.15)]"
+          transition={{ delay: 0.1 }}
+          className="bg-white border border-zinc-100 p-8 rounded-3xl shadow-xl"
         >
           {error && (
             <motion.div
-              initial={{ opacity: 0, x: -20 }}
+              initial={{ opacity: 0, x: -10 }}
               animate={{ opacity: 1, x: 0 }}
-              className="mb-8 p-5 bg-rose-50 border border-rose-100 rounded-3xl text-rose-500 text-sm font-black italic shadow-sm"
+              className="mb-6 p-4 bg-rose-50 border border-rose-100 rounded-xl text-rose-500 text-sm font-semibold shadow-sm"
             >
               {error}
             </motion.div>
           )}
 
-          <form onSubmit={handleSubmit(onSubmit)} className="space-y-8">
+          <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
             <div className="space-y-2">
-              <label className="text-[10px] font-black uppercase tracking-[0.2em] text-zinc-400 ml-4">
+              <label className="text-[10px] font-bold uppercase tracking-widest text-zinc-400 ml-1">
                 Email Address
               </label>
               <Input
-                placeholder="you@sanctuary.com"
+                placeholder="you@bedzzz.com"
                 type="email"
                 {...register("email")}
-                className="rounded-2xl h-14 border-zinc-50 bg-white/50 focus:bg-white transition-all shadow-sm"
+                className="rounded-xl h-12 border-zinc-100 bg-zinc-50 focus:bg-white transition-all shadow-sm"
                 error={errors.email?.message}
               />
             </div>
 
             <div className="space-y-2">
-              <div className="flex items-center justify-between mx-4">
-                <label className="text-[10px] font-black uppercase tracking-[0.2em] text-zinc-400">
+              <div className="flex items-center justify-between ml-1">
+                <label className="text-[10px] font-bold uppercase tracking-widest text-zinc-400">
                   Password
                 </label>
                 <a
                   href="#"
-                  className="text-[10px] text-primary font-black uppercase tracking-widest hover:underline shadow-sm"
+                  className="text-[10px] text-primary font-bold uppercase tracking-widest hover:underline"
                 >
                   Forgot?
                 </a>
@@ -144,29 +135,28 @@ const Login: React.FC = () => {
                 placeholder="••••••••"
                 type="password"
                 {...register("password")}
-                className="rounded-2xl h-14 border-zinc-50 bg-white/50 focus:bg-white transition-all shadow-sm"
+                className="rounded-xl h-12 border-zinc-100 bg-zinc-50 focus:bg-white transition-all shadow-sm"
                 error={errors.password?.message}
               />
             </div>
 
             <Button
               type="submit"
-              className="w-full h-16 gap-3 rounded-[1.5rem] shadow-2xl shadow-primary/30 font-black uppercase tracking-[0.2em]"
+              className="w-full h-14 gap-2 rounded-xl shadow-lg font-bold uppercase tracking-widest text-sm"
               isLoading={mutation.isPending}
             >
-              <LogIn className="w-5 h-5" />
+              <LogIn className="w-4 h-4" />
               Sign In
             </Button>
           </form>
         </motion.div>
 
-        <p className="text-center mt-10 text-zinc-400 font-bold italic">
-          New to the family?{" "}
+        <p className="text-center mt-8">
           <Link
-            to="/signup"
-            className="text-primary font-black hover:underline tracking-tight not-italic ml-1"
+            to="/"
+            className="text-primary font-bold hover:underline text-sm tracking-tight"
           >
-            Create an account
+            ← Back to Gallery
           </Link>
         </p>
       </motion.div>
